@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register - Our Store{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body p-5">
+                    <h2 class="card-title mb-4">Create an Account</h2>
+
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+                        <div class="mb-3">
+                            {{ form_label(form.name, 'Full Name', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.name) }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(form.email, 'Email address', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.email) }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(form.plainPassword.first, 'Password', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.plainPassword.first) }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(form.plainPassword.second, 'Confirm Password', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(form.plainPassword.second) }}
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success btn-lg">Sign Up</button>
+                        </div>
+
+                    {{ form_end(form) }}
+
+                    <hr class="my-4">
+                    <p class="text-center text-muted">
+                        Already have an account?
+                        <a href="{{ path('app_login') }}" class="text-decoration-none">Login</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

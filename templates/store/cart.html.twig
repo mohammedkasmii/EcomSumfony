@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Shopping Cart - Our Store{% endblock %}
+{% block nav_cart %}active{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <h1 class="mb-4">Shopping Cart</h1>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-3">
+                <div class="card-body">
+                    {% if cart.cartItems is empty %}
+                        <p class="text-muted text-center py-4">Your cart is empty.</p>
+                    {% else %}
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in cart.cartItems %}
+                                <tr>
+                                    <td>{{ item.product.name }}</td>
+                                    <td>${{ item.price }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td class="fw-bold">${{ item.price * item.quantity }}</td>
+                                    <td>
+                                        <form method="post" action="{{ path('app_cart_remove', {id: item.product.id}) }}">
+                                            <button class="btn btn-sm btn-outline-danger">Remove</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <a href="{{ path('app_home') }}" class="btn btn-outline-primary">← Continue Shopping</a>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Order Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <strong>Total:</strong>
+                        <strong class="text-success">${{ cart.total() }}</strong>
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-success btn-lg">Proceed to Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

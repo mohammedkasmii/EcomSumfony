@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.name }} - Our Store{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="row">
+
+        <div class="col-md-6">
+            <img src="{{ asset('images/placeholder.png') }}" class="img-fluid rounded" alt="{{ product.name }}">
+        </div>
+
+        <div class="col-md-6">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ path('app_home') }}" class="text-decoration-none">Home</a></li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ path('app_products_by_category', {slug: product.category.slug}) }}" class="text-decoration-none">
+                            {{ product.category.name }}
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+                </ol>
+            </nav>
+
+            <span class="badge bg-primary mb-3">{{ product.category.name }}</span>
+            <h1 class="mb-3">{{ product.name }}</h1>
+            <h3 class="text-success mb-4">${{ product.price }}</h3>
+
+            <div class="mb-4">
+                <h5>Description</h5>
+                <p class="text-muted">{{ product.description }}</p>
+            </div>
+
+            <<form method="post" action="{{ path('app_cart_add', {id: product.id}) }}">
+    <div class="mb-3">
+        <label for="quantity" class="form-label">Quantity</label>
+        <input type="number" class="form-control" id="quantity" name="quantity"
+               value="1" min="1" max="10" style="max-width: 100px;">
+    </div>
+    <div class="d-grid gap-2 d-md-flex">
+        <button type="submit" class="btn btn-primary btn-lg">Add to Cart</button>
+        <a href="{{ path('app_products_by_category', {slug: product.category.slug}) }}"
+           class="btn btn-outline-secondary btn-lg">Back to {{ product.category.name }}</a>
+    </div>
+</form>
+
+            <div class="mt-4 pt-4 border-top">
+                <ul class="list-unstyled">
+                    <li class="mb-2"><strong>SKU:</strong> PRD-{{ product.id }}</li>
+                    <li class="mb-2"><strong>Availability:</strong> <span class="text-success">In Stock</span></li>
+                    <li class="mb-2"><strong>Category:</strong> {{ product.category.name }}</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

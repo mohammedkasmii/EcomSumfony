@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categories - Our Store{% endblock %}
+
+{% block body %}
+<div class="bg-primary bg-gradient text-white py-5">
+    <div class="container">
+        <h1 class="display-3 fw-bold mb-4">Welcome to Our Store</h1>
+        <p class="lead mb-4">Discover amazing products across all categories.</p>
+        <a href="{{ path('app_home') }}" class="btn btn-light btn-lg me-2">Shop Now</a>
+        <a href="#categories" class="btn btn-outline-light btn-lg">Browse Categories</a>
+    </div>
+</div>
+
+<div class="container my-5" id="categories">
+    <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold">Shop by Category</h2>
+        <p class="text-muted">Explore our wide range of products organized by category</p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for category in categories %}
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <span class="badge bg-primary mb-2">{{ category.products|length }} Products</span>
+                    <h4 class="card-title">{{ category.name }}</h4>
+                    <p class="card-text text-muted">{{ category.description }}</p>
+                    <a href="{{ path('app_products_by_category', {slug: category.slug}) }}" class="btn btn-outline-primary">
+                        Browse {{ category.name }}
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
