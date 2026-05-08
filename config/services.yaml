@@ -19,5 +19,11 @@ services:
     App\:
         resource: '../src/'
 
+    App\Account\Factory\AccountFactoryInterface: '@App\Account\Factory\DefaultAccountFactory'
+    App\Account\Persister\AccountPersisterInterface: '@App\Account\Persister\DefaultAccountPersister'
+    App\Cart\CartStrategyInterface: '@App\Cart\DefaultCartStrategy'
+    App\Product\Fetcher\ProductFetcherInterface: '@App\Product\Fetcher\DefaultProductFetcher'
+    App\Category\Fetcher\CategoryFetcherInterface: '@App\Category\Fetcher\DefaultCategoryFetcher'
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

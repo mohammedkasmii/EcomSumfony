@@ -33,6 +33,7 @@
                                     <td class="fw-bold">${{ item.price * item.quantity }}</td>
                                     <td>
                                         <form method="post" action="{{ path('app_cart_remove', {id: item.product.id}) }}">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('remove_item') }}">
                                             <button class="btn btn-sm btn-outline-danger">Remove</button>
                                         </form>
                                     </td>

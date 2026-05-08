@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\CartRepository;
@@ -16,7 +18,10 @@ class Cart
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?\DateTime $createdAt = null;
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'carts')]
+    private ?User $user = null;
 
     /**
      * @var Collection<int, CartItem>
@@ -34,21 +39,26 @@ class Cart
         return $this->id;
     }
 
-    public function setId(string $id): static
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }
@@ -74,7 +84,6 @@ class Cart
     public function removeCartItem(CartItem $cartItem): static
     {
         if ($this->cartItems->removeElement($cartItem)) {
-            // set the owning side to null (unless already changed)
             if ($cartItem->getCart() === $this) {
                 $cartItem->setCart(null);
             }
@@ -83,12 +92,14 @@ class Cart
         return $this;
     }
 
-    public function total(): float
-{
-    return array_reduce(
-        $this->cartItems->toArray(),
-        fn($carry, $item) => $carry + ($item->getPrice() * $item->getQuantity()),
-        0.0
-    );
-}
+    public function total(): string
+    {
+        $total = '0.00';
+        foreach ($this->cartItems as $item) {
+            $lineTotal = bcmul($item->getPrice() ?? '0', (string) $item->getQuantity(), 2);
+            $total = bcadd($total, $lineTotal, 2);
+        }
+
+        return $total;
+    }
 }

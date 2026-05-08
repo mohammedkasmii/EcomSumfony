@@ -32,7 +32,8 @@
                 <p class="text-muted">{{ product.description }}</p>
             </div>
 
-            <<form method="post" action="{{ path('app_cart_add', {id: product.id}) }}">
+            <form method="post" action="{{ path('app_cart_add', {id: product.id}) }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('add_item') }}">
     <div class="mb-3">
         <label for="quantity" class="form-label">Quantity</label>
         <input type="number" class="form-control" id="quantity" name="quantity"

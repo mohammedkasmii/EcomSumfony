@@ -12,8 +12,8 @@
             <div class="card">
                 <div class="card-body text-center">
                     <img src="{{ asset('images/profile.png') }}" class="rounded-circle mb-3" alt="User Avatar" width="150" height="150">
-                    <h5 class="card-title">John Doe</h5>
-                    <p class="text-muted">john.doe@email.com</p>
+                    <h5 class="card-title">{{ app.user.name }}</h5>
+                    <p class="text-muted">{{ app.user.email }}</p>
                     <hr>
                     <ul class="list-unstyled">
                         <li class="mb-2"><a href="#profile" class="text-decoration-none">Profile Information</a></li>
@@ -34,11 +34,11 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="fw-bold">Full Name:</label>
-                            <p>John Doe</p>
+                            <p>{{ app.user.name }}</p>
                         </div>
                         <div class="col-md-6">
                             <label class="fw-bold">Email:</label>
-                            <p>john.doe@email.com</p>
+                            <p>{{ app.user.email }}</p>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -66,43 +66,7 @@
                     <h5 class="mb-0">Order History</h5>
                 </div>
                 <div class="card-body">
-
-                    {% set orders = [
-                        {id: 'ORD-2024-001', date: 'February 10, 2024', items: 'Wireless Headphones, Bluetooth Speaker', total: '$139.98', status: 'Delivered', badge: 'success', action: 'View Details'},
-                        {id: 'ORD-2024-002', date: 'February 5, 2024',  items: 'Classic Leather Jacket',                  total: '$149.99', status: 'In Transit', badge: 'info',    action: 'Track Order'},
-                        {id: 'ORD-2024-003', date: 'January 28, 2024',  items: 'Yoga Mat, Smart Plant Sensor',            total: '$64.98',  status: 'Processing', badge: 'warning', action: 'View Details'},
-                        {id: 'ORD-2024-004', date: 'January 20, 2024',  items: 'Web Development Guide',                  total: '$24.99',  status: 'Cancelled',  badge: 'danger',  action: 'View Details'},
-                        {id: 'ORD-2024-005', date: 'January 15, 2024',  items: 'Mechanical Keyboard, Wireless Mouse',    total: '$119.98', status: 'Delivered',  badge: 'success', action: 'Buy Again'}
-                    ] %}
-
-                    {% for order in orders %}
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <h6 class="card-title">Order #{{ order.id }}</h6>
-                                    <p class="text-muted mb-2">Placed on: {{ order.date }}</p>
-                                    <p class="mb-1"><strong>Items:</strong> {{ order.items }}</p>
-                                    <p class="mb-0"><strong>Total:</strong> {{ order.total }}</p>
-                                </div>
-                                <div class="col-md-4 text-md-end">
-                                    <span class="badge bg-{{ order.badge }} mb-2">{{ order.status }}</span><br>
-                                    <a href="#" class="btn btn-sm btn-outline-primary mt-2">{{ order.action }}</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-
-                    <nav aria-label="Order pagination">
-                        <ul class="pagination justify-content-center mb-0">
-                            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                    </nav>
-
+                    <p class="text-muted text-center py-4">You haven't placed any orders yet.</p>
                 </div>
             </div>
         </div>

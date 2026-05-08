@@ -1,17 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Cart;
 
 use App\Entity\Cart;
 use App\Entity\CartItem;
+use App\Cart\Persister\CartPersisterInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class SessionCart implements CartInterface
+final readonly class DefaultCartStrategy implements CartStrategyInterface
 {
     public function __construct(
         private RequestStack $requestStack,
-        private EntityManagerInterface $em
+        private EntityManagerInterface $em,
+        private CartPersisterInterface $persister
     ) {}
 
     public function getCart(string $identifier = 'default'): Cart
@@ -26,11 +30,9 @@ class SessionCart implements CartInterface
             }
         }
 
-        // Créer un nouveau panier et le persister
         $cart = new Cart();
-        $cart->setCreatedAt(new \DateTime());
-        $this->em->persist($cart);
-        $this->em->flush();
+        $cart->setCreatedAt(new \DateTimeImmutable());
+        $this->persister->saveCart($cart);
 
         $session->set('cart_id', $cart->getId());
 
@@ -39,18 +41,17 @@ class SessionCart implements CartInterface
 
     public function add(CartItem $item, Cart $cart): Cart
     {
-        // Vérifier si le produit existe déjà dans le panier
         foreach ($cart->getCartItems() as $existing) {
             if ($existing->getProduct()->getId() === $item->getProduct()->getId()) {
                 $existing->setQuantity($existing->getQuantity() + $item->getQuantity());
-                $this->em->flush();
+                $this->persister->saveItem($existing);
+
                 return $cart;
             }
         }
 
         $item->setCart($cart);
-        $this->em->persist($item);
-        $this->em->flush();
+        $this->persister->saveItem($item);
 
         return $cart;
     }
@@ -60,8 +61,8 @@ class SessionCart implements CartInterface
         foreach ($cart->getCartItems() as $existing) {
             if ($existing->getProduct()->getId() === $item->getProduct()->getId()) {
                 $cart->removeCartItem($existing);
-                $this->em->remove($existing);
-                $this->em->flush();
+                $this->persister->removeItem($existing);
+
                 return $cart;
             }
         }
@@ -77,11 +78,7 @@ class SessionCart implements CartInterface
         if ($cartId) {
             $cart = $this->em->getRepository(Cart::class)->find($cartId);
             if ($cart) {
-                foreach ($cart->getCartItems() as $item) {
-                    $this->em->remove($item);
-                }
-                $this->em->remove($cart);
-                $this->em->flush();
+                $this->persister->deleteCart($cart);
             }
         }
 

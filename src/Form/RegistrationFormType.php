@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
-use App\Entity\User;
+use App\Account\DTO\RegistrationRequest;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -13,13 +15,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, [
+            ->add(child: 'name', type: TextType::class, options: [
                 'label' => 'Full Name',
                 'attr'  => ['placeholder' => 'Enter your full name'],
                 'constraints' => [
@@ -27,7 +30,7 @@ class RegistrationFormType extends AbstractType
                     new Length(min: 2, max: 100),
                 ],
             ])
-            ->add('email', EmailType::class, [
+            ->add(child: 'email', type: EmailType::class, options: [
                 'label' => 'Email address',
                 'attr'  => ['placeholder' => 'Enter your email'],
                 'constraints' => [
@@ -35,16 +38,11 @@ class RegistrationFormType extends AbstractType
                     new Email(message: 'Please enter a valid email'),
                 ],
             ])
-            ->add('plainPassword', RepeatedType::class, [
+            ->add(child: 'plainPassword', type: RepeatedType::class, options: [
                 'type'   => PasswordType::class,
-                'mapped' => false,
                 'first_options' => [
                     'label' => 'Password',
                     'attr'  => ['placeholder' => 'Create a password'],
-                    'constraints' => [
-                        new NotBlank(message: 'Please enter a password'),
-                        new Length(min: 6, minMessage: 'Password must be at least {{ limit }} characters'),
-                    ],
                 ],
                 'second_options' => [
                     'label' => 'Confirm Password',
@@ -57,7 +55,10 @@ class RegistrationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => RegistrationRequest::class,
+            'attr' => [
+                'novalidate' => true,
+            ],
         ]);
     }
 }

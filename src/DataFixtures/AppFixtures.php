@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\Category;
@@ -30,20 +32,20 @@ class AppFixtures extends Fixture
         }
 
         $productsData = [
-            ['name' => 'Wireless Headphones',  'price' => 79.99,  'category' => 'electronics', 'description' => 'Premium noise-cancelling wireless headphones with 30h battery life.'],
-            ['name' => 'Bluetooth Speaker',    'price' => 59.99,  'category' => 'electronics', 'description' => 'Portable waterproof speaker with 360° sound.'],
-            ['name' => 'Smartphone Stand',     'price' => 19.99,  'category' => 'electronics', 'description' => 'Adjustable aluminium stand for all smartphones.'],
-            ['name' => 'USB-C Cable 2m',       'price' => 12.99,  'category' => 'electronics', 'description' => 'Braided fast-charging USB-C cable, 2 meters.'],
-            ['name' => 'Wireless Mouse',       'price' => 29.99,  'category' => 'electronics', 'description' => 'Ergonomic wireless mouse with silent click.'],
-            ['name' => 'Mechanical Keyboard',  'price' => 89.99,  'category' => 'electronics', 'description' => 'Compact TKL mechanical keyboard with RGB backlight.'],
-            ['name' => 'Webcam HD 1080p',      'price' => 49.99,  'category' => 'electronics', 'description' => 'Full HD webcam with built-in microphone.'],
-            ['name' => 'Power Bank 20000mAh',  'price' => 39.99,  'category' => 'electronics', 'description' => 'High-capacity power bank with dual USB output.'],
-            ['name' => 'Smart Watch Pro',      'price' => 199.99, 'category' => 'electronics', 'description' => 'Smart watch with health tracking and GPS.'],
-            ['name' => 'Classic Leather Jacket','price' => 149.99,'category' => 'fashion',     'description' => 'Genuine leather jacket, timeless style.'],
-            ['name' => 'Running Sneakers',     'price' => 89.99,  'category' => 'fashion',     'description' => 'Lightweight and breathable running shoes.'],
-            ['name' => 'Smart Plant Sensor',   'price' => 34.99,  'category' => 'home-garden', 'description' => 'Monitors soil moisture, light and temperature.'],
-            ['name' => 'Yoga Mat Premium',     'price' => 29.99,  'category' => 'sports',      'description' => 'Non-slip premium yoga mat, 6mm thick.'],
-            ['name' => 'Web Development Guide','price' => 24.99,  'category' => 'books',       'description' => 'Complete guide to modern web development.'],
+            ['name' => 'Wireless Headphones',  'price' => '79.99',  'category' => 'electronics', 'description' => 'Premium noise-cancelling wireless headphones with 30h battery life.'],
+            ['name' => 'Bluetooth Speaker',    'price' => '59.99',  'category' => 'electronics', 'description' => 'Portable waterproof speaker with 360° sound.'],
+            ['name' => 'Smartphone Stand',     'price' => '19.99',  'category' => 'electronics', 'description' => 'Adjustable aluminium stand for all smartphones.'],
+            ['name' => 'USB-C Cable 2m',       'price' => '12.99',  'category' => 'electronics', 'description' => 'Braided fast-charging USB-C cable, 2 meters.'],
+            ['name' => 'Wireless Mouse',       'price' => '29.99',  'category' => 'electronics', 'description' => 'Ergonomic wireless mouse with silent click.'],
+            ['name' => 'Mechanical Keyboard',  'price' => '89.99',  'category' => 'electronics', 'description' => 'Compact TKL mechanical keyboard with RGB backlight.'],
+            ['name' => 'Webcam HD 1080p',      'price' => '49.99',  'category' => 'electronics', 'description' => 'Full HD webcam with built-in microphone.'],
+            ['name' => 'Power Bank 20000mAh',  'price' => '39.99',  'category' => 'electronics', 'description' => 'High-capacity power bank with dual USB output.'],
+            ['name' => 'Smart Watch Pro',      'price' => '199.99', 'category' => 'electronics', 'description' => 'Smart watch with health tracking and GPS.'],
+            ['name' => 'Classic Leather Jacket','price' => '149.99','category' => 'fashion',     'description' => 'Genuine leather jacket, timeless style.'],
+            ['name' => 'Running Sneakers',     'price' => '89.99',  'category' => 'fashion',     'description' => 'Lightweight and breathable running shoes.'],
+            ['name' => 'Smart Plant Sensor',   'price' => '34.99',  'category' => 'home-garden', 'description' => 'Monitors soil moisture, light and temperature.'],
+            ['name' => 'Yoga Mat Premium',     'price' => '29.99',  'category' => 'sports',      'description' => 'Non-slip premium yoga mat, 6mm thick.'],
+            ['name' => 'Web Development Guide','price' => '24.99',  'category' => 'books',       'description' => 'Complete guide to modern web development.'],
         ];
 
         foreach ($productsData as $data) {
